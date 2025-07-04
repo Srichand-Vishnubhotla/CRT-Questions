@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+//two pointer method
 int main()
 {
     int a[10],size,i,p1,p2,t;
