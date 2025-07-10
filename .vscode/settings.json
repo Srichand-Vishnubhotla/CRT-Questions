@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "ostream": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "array": "c",
+        "deque": "c",
+        "vector": "c",
+        "string_view": "c"
     }
 }
