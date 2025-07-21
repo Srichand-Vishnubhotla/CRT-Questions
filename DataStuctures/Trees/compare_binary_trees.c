@@ -66,7 +66,7 @@ int compare(struct node *root1,struct node *root2)
         return 0;
     }
 
-    return compare(root1->left,root2->left)&&(root1->right,root2->right);
+    return compare(root1->left,root2->left)&&compare(root1->right,root2->right);
 }
 void inorder(struct node *root)
 {
@@ -101,22 +101,41 @@ void preorder(struct node *root)
 
 void main()
 {
-    struct node *root;
-    root=createnode(1);
-    root->left=createnode(2);
-    root->right=createnode(3);
-    root->left->left=createnode(4);
-    root->left->right=createnode(5);
-    root->right->left=createnode(6);
-    root->right->right=createnode(7);
-    inorder(root);
+    struct node *root1;
+    struct node *root2;
+    root1=createnode(1);
+    root1->left=createnode(2);
+    root1->right=createnode(3);
+    root1->left->left=createnode(4);
+    root1->left->right=createnode(5);
+    root1->right->left=createnode(6);
+    root1->right->right=createnode(7);
+    
+    root2=createnode(1);
+    root2->left=createnode(2);
+    root2->right=createnode(3);
+    root2->left->left=createnode(4);
+    root2->left->right=createnode(5);
+    root2->right->left=createnode(6);
+    root2->right->right=createnode(7);
+    inorder(root1);
     printf("\n");
-    preorder(root);
+    preorder(root1);
     printf("\n");
-    postorder(root);
+    postorder(root1);
     printf("\n");
-    int h=height(root);
+    int h=height(root1);
     printf("The height of the tree is %d ",h);
     printf("\n");
-    printf("The size of the tree is %d",size(root));
+    printf("The size of the tree is %d",size(root1));
+    int cmp=compare(root1,root2);
+    printf("\n");
+    if(cmp==1)
+    {
+        printf("Equal");
+    }
+    else
+    {
+        printf("Not equal");
+    }
 }

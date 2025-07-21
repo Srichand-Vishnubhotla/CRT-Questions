@@ -1,4 +1,3 @@
-from collections import deque
 class Node:
     def __init__(self,data):
         self.data=data
@@ -17,6 +16,35 @@ class Node:
                     self.right=Node(data)
                 else:
                     self.right.insert(data)
+
+    def delete(self,data):
+        if(self.data is None):
+            print("Empty")
+        elif(data<self.data):
+            if(self.left):
+                self.left=self.left.delete(data)
+        elif (data>self.data):
+            if(self.right):
+                self.right=self.right.delete(data)
+        else:
+            if(self.left is None):
+                temp=self.right
+                self=None
+                return temp
+            elif(self.right is None):
+                temp=self.right
+                self=None
+                return temp
+            else:
+                temp=self.right.minimum()
+                self.data=temp.data
+                self.right.delete(temp.data)
+        return self
+    def minimum(self):
+        curr=self
+        while(curr.left):
+            curr=curr.left
+        return curr
 
 def inorder(root):
     if(root!=None):
@@ -42,46 +70,25 @@ def height(root):
     else:
         return 1+max(height(root.left),height(root.right))
 
-def level_q(root):
+def level(root):
+    h=height(root)
+    for p in range(1,h+1):
+        current(root,p)
+
+def current(root,l):
     if(root is None):
         return 0
-    q=deque([root])
-    while(q):
-        level_size=len(q)
-        node=q.popleft()
-        print(node.data,end=" ")
-        if node.left:
-            q.append(node.left)
-        if node.right:
-            q.append(node.right)
+    elif(l==1):
+        print(root.data,end=" ")
+    else:
+        current(root.left,l-1)
+        current(root.right,l-1)
 
-def zigzag_q(root):
-    if root is None:
-        return 0
-    r=[]
-    q=deque([root])
-    lr=True
-    while(q):
-        level_size=len(q)
-        level_nodes=deque()
-        for p in range(level_size):
-            node=q.popleft()
-            if lr:
-                level_nodes.append(node.data)
-            else:
-                level_nodes.appendleft(node.data)
-            if node.left:
-                q.append(node.left)
-            if node.right:
-                q.append(node.right)
-        lr=not lr 
-        r.append(list(level_nodes))
-    return r
 
 n1=Node(27)    
 n1.insert(14)
 n1.insert(35)
-n1.insert(10)
+##n1.insert(10)
 n1.insert(19)
 n1.insert(31)
 n1.insert(42)
@@ -94,8 +101,7 @@ h=height(n1)
 ##print("\n")
 ##print("The height of the tree is:",h)
 ##print("\n")
-level_q(n1)
-print("\n")
-l=zigzag_q(n1)
-print(l)
+n1.delete(27)
+level(n1)
+
 
